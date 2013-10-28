@@ -8,7 +8,9 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.nio.charset.Charset;
 import java.util.Arrays;
+import java.util.Iterator;
 import java.util.List;
+import java.util.SortedSet;
 
 /**
  *
@@ -109,5 +111,14 @@ public class Utility {
 
         // and then we can return your byte array.
         return byteBuffer.toByteArray();
+    }
+    
+    public static String Flatten(SortedSet<String> set, String separator) {
+        String result = "";
+        for (final Iterator it = set.iterator(); it.hasNext();) {
+            result += (String)it.next() + separator;
+        }
+        
+        return result;
     }
 }

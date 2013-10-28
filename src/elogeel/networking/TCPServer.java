@@ -44,7 +44,7 @@ public class TCPServer implements IServer {
      * @param data The data to send
      */
     @Override
-    public void send(byte[] data) throws SocketException {
+    public synchronized void send(byte[] data) throws SocketException {
         try {
             connectionSocket.getOutputStream().write(data);
             connectionSocket.getOutputStream().flush();
@@ -60,7 +60,7 @@ public class TCPServer implements IServer {
      * @return The received data.
      */
     @Override
-    public byte[] receive(int length) throws SocketException {
+    public synchronized byte[] receive(int length) throws SocketException {
         byte[] data = new byte[length];
         
         try {
@@ -74,7 +74,7 @@ public class TCPServer implements IServer {
     }    
 
     @Override
-    public void close() {
+    public synchronized void close() {
         try {
             serverSocket.close();
         } catch (IOException ex) {

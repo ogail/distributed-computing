@@ -104,7 +104,7 @@ public class WordList
    */
   public SortedSet<String> getCloseWords(final String the_word)
   {
-    final SortedSet<String> close_set = new TreeSet<String>();
+    final SortedSet<String> close_set = new TreeSet<>();
     
     for (String s : my_words)
     {
@@ -117,5 +117,21 @@ public class WordList
     }
     
     return close_set;
+  }
+  
+  /*
+   * @param the_word The name of the word to be added.
+   */
+  public synchronized void add(String the_word) {
+      my_words.add(the_word);
+  }
+  
+  /*
+   * @param the_word The name of the word to be removed.
+   */
+  public synchronized void remove(String the_word) {
+      if (my_words.contains(the_word)) {
+          my_words.remove(the_word);
+      }
   }
 }
