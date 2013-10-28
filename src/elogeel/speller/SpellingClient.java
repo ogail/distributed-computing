@@ -29,15 +29,13 @@ public class SpellingClient {
     {
         Client client;
         
-        if (type == NetworkProtocolType.UDP) {
-            client = new UDPClient(port, ipAddress);
-        }
-        else {
-            client = new TCPClient(port, ipAddress);
-        }
-        
         for (int i = 0; i < words.length; i++) {
-
+            if (type == NetworkProtocolType.UDP) {
+                client = new UDPClient(port, ipAddress);
+            }
+            else {
+                client = new TCPClient(port, ipAddress);
+            }
             String word = new String(words[i].getBytes(), Charset.forName("US-ASCII"));
             Log.out("Client is looking for word: " + word);
             client.send(word.getBytes());
@@ -70,8 +68,8 @@ public class SpellingClient {
             else {
                 Log.err("received unsolicited response to query for word: " + word);
             }
+            
+            client.close();
         }
-        
-        client.close();
     }
 }

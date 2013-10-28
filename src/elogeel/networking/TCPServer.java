@@ -36,7 +36,6 @@ public class TCPServer implements IServer {
         this.port = port;
         serverSocket = new ServerSocket(this.port);
         serverSocket.setReuseAddress(true);
-        connectionSocket = serverSocket.accept();
     }
     
     /**
@@ -48,6 +47,8 @@ public class TCPServer implements IServer {
     public void send(byte[] data) throws SocketException {
         try {
             connectionSocket.getOutputStream().write(data);
+            connectionSocket.getOutputStream().flush();
+            connectionSocket.close();
         } catch (IOException ex) {
             Logger.getLogger(TCPServer.class.getName()).log(Level.SEVERE, null, ex);
         }
@@ -63,6 +64,7 @@ public class TCPServer implements IServer {
         byte[] data = new byte[length];
         
         try {
+            connectionSocket = serverSocket.accept();
             connectionSocket.getInputStream().read(data, 0, length);
         } catch (IOException ex) {
             Logger.getLogger(TCPServer.class.getName()).log(Level.SEVERE, null, ex);
